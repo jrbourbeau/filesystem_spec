@@ -1,0 +1,23 @@
+name: Windows CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        TOXENV: ["py36", "py37", "lint"]
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v1
+
+      - name: Install
+        shell: bash
+        run: source ci/install.sh
+
+      - name: Run tests
+        shell: bash
+        run: tox -v
